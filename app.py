@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
-import mj_logic
 from datetime import datetime, date
+
+from mj_logic import date_from_now_logic, today_str_func
 
 app = Flask(__name__)
 
@@ -12,19 +13,20 @@ def index():
 @app.route("/date_from_now", methods=['GET','POST'])
 def date_from_now():
     name = ""
-    t_delta = ""
+    today_str = today_str_func()
     if request.method == "POST" and "input_date" in request.form:
         name = request.form.get("input_date")
-        dt = datetime.strptime(name, "%d/%m/%Y")
-        today = datetime.combine(date.today(), datetime.min.time())
-        t_delta = str((dt-today).days)
+        name = date_from_now_logic(name)
     return render_template("date_from_now.html",
-                            name = t_delta)
+                            name = name,
+                            today_str = today_str)
 
 
-@app.route("/week_dates")
+@app.route("/week_dates", methods=['GET','POST'])
 def week_dates():
-    return render_template("week_dates.html")
+    today_str = today_str_func()
+    return render_template("week_dates.html",
+                            today_str = today_str)
 
 
 @app.route("/holiday_planner")
