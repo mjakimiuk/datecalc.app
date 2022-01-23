@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<head>
+    <title>My flask app</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+</head>
+
+
+
+
+
+
+
+<form  method="POST" action="/days_from_now">
+    <label>
+      Enter your desired date:
+      <input type="date" name="input_date" value="{{ today_str }}" min="1930-01-01",
+      max="2100-01-01">
+    </label>
+  
+    <p><button>Submit</button></p>
+  </form>
+
+  <body>
+
+
+    <br>
+    
+    <div>
+    {% if name and not name==1 and not name=='error' %}
+            <p>Today is {{ today_str_txt }}.</p>
+            <p>There is {{ name }} day's from today to submitted date</p>
+    {% endif %}
+    {% if name==0 %}
+            <p>You have submitted today's date</p>
+    {% endif %}
+    {% if name==1 %}
+            <p>Today is {{ today_str_txt }}.</p>
+            <p>There is {{ name }} day from today to submitted date</p>
+    {% endif %}
+    {% if name=='error' %}
+            
+            <p>You have subbmited wrong date.</p>
+    {% endif %}
+
+    </div>
+    
+    </body>
+
+
+<br>
+
+<a class="pure-button" href="/">Homepage</a>

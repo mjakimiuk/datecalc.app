@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template
 from datetime import datetime, date
 
-from mj_logic import date_from_now_logic, today_str_func
+from mj_logic import days_from_now_logic, today_str_func
 
 app = Flask(__name__)
 
@@ -10,16 +10,20 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/date_from_now", methods=['GET','POST'])
-def date_from_now():
+@app.route("/days_from_now", methods=['GET','POST'])
+def days_from_now():
     name = ""
+    today_str_txt = today_str_func()
     today_str = today_str_func()
     if request.method == "POST" and "input_date" in request.form:
         name = request.form.get("input_date")
-        name = date_from_now_logic(name)
-    return render_template("date_from_now.html",
+        name = days_from_now_logic(name)
+        today_str = request.form.get("input_date")
+    
+    return render_template("days_from_now.html",
                             name = name,
-                            today_str = today_str)
+                            today_str = today_str,
+                            today_str_txt = today_str_txt)
 
 
 @app.route("/week_dates", methods=['GET','POST'])
