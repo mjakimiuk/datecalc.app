@@ -11,3 +11,12 @@ def days_from_now_logic(date_str: str) -> int:
 
 def today_str_func():
     return datetime.today().date().strftime("%Y-%m-%d")
+
+def week_dates_logic(year: str,week: str) -> str:
+    try:
+        d = f"{year}-W{week}"
+        r = datetime.strptime(d + '-1', "%Y-W%W-%w")
+        q = datetime.strptime(d + '-0', "%Y-W%W-%w")
+        return r.date().strftime("%d/%m/%Y"),q.date().strftime("%d/%m/%Y")
+    except ValueError:
+        return ('error','error')
