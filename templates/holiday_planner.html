@@ -1,3 +1,76 @@
 <!DOCTYPE html>
+<head>
+    <title>My flask app</title>
 
-<p>Dummy text - Holiday planner</p>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="static/calendar.css" />
+</head>
+<p>Week number dates</p>
+
+<form class="pure-form", method="POST", action='/holiday_planner'>
+    <fieldset>
+        <legend>Please choose country and enter how many vacation days you have</legend>
+        <input type="text" placeholder="Days of vacation" name="input_vacation" />
+        <select name="country" id="country_id" selected="{{ country }}">
+            
+            {% for country in countries %}
+                <option value="{{ country }}"> {{ country }}</option>
+            {% endfor %}
+        </select>
+        <select name="year" id="year_id">
+            {% for year in years %}
+                <option value="{{ year }}" > {{ year }}</option>
+            {% endfor %}
+        </select>
+        
+        <button type="submit" class="pure-button pure-button-primary">Submit</button>
+    </fieldset>
+</form>
+
+{% if choosen_country %}
+    <p>Holidays in {{ choosen_country }} in {{ choosen_year }} </p>
+{% endif %}
+
+<table>
+    <thead>
+        <tr>
+            <th colspan="8">January</th>
+        </tr>
+    </thead>
+    <tr>
+        <th>Week number</th>
+        <th>Mon</th>
+        <th>Tue</th>
+        <th>Wed</th>
+        <th>Thu</th>
+        <th>Fri</th>
+        <th>Sat</th>
+        <th>Sun</th>
+    </tr>
+
+    {% for i in value1 if i   %}
+
+     
+    <tr>
+        
+        <th class="">{{ i[0][2] if i }}</th>
+        
+
+        {% for my_item in i %}
+            
+            <th class={{ my_item[1] }}>{{ my_item[0].day }}</th>
+        {% endfor %}
+        
+    </tr>
+    
+    {% endfor %}
+ 
+</table>
+
+
+
+
+
+<br>
+
+<a class="pure-button" href="/">Homepage</a>
