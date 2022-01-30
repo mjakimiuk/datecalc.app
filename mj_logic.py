@@ -1,7 +1,7 @@
 from datetime import datetime, date
 import typing
 import holidays
-import calendar 
+import calendar
 
 
 def days_from_now_logic(date_str: str) -> str:
@@ -26,18 +26,31 @@ def week_dates_logic(year: str, week: str) -> typing.Tuple[str, str]:
         return ('error', 'error')
 
 
-def calendar_holiday(year,country=holidays.US()):
-  cal_generator=[]
-  cal_lst=[]
-  for i in range(1,13):
-    cal_generator.append(calendar.Calendar(firstweekday=0).itermonthdates(year, i))
-  for i in cal_generator:
-    for y in i:
-      if y in country or y.weekday()==6 or y.weekday()==5:
-        cal_lst.append((y,'holiday',y.isocalendar()[1],y.month))
-      else:
-        cal_lst.append((y,'',y.isocalendar()[1],y.month))
-  return [cal_lst[q:x] for q,x in zip(range(0,442,7),range(7,442,7))]
+def calendar_holiday(year, country=holidays.US()):
+    cal_generator = []
+    months_dictionary = {"January": [],
+                         "February": [],
+                         "March": [],
+                         "April": [],
+                         "May": [],
+                         "June": [],
+                         "July": [],
+                         "August": [],
+                         "September": [],
+                         "October": [],
+                         "November": [],
+                         "December": []
+                         }
 
+    for i in range(1, 13):
+        (cal_generator.
+         append(calendar.Calendar(firstweekday=0).itermonthdates(year, i)))
 
-
+    for d_key, i in zip(months_dictionary.keys(), cal_generator):
+        for y in i:
+            if y in country or y.weekday() == 6 or y.weekday() == 5:
+                (months_dictionary[d_key].
+                 append((y, 'holiday', y.isocalendar()[1])))
+            else:
+                months_dictionary[d_key].append((y, '', y.isocalendar()[1]))
+    return months_dictionary
