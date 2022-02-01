@@ -27,7 +27,6 @@ def week_dates_logic(year: str, week: str) -> typing.Tuple[str, str]:
 
 
 def calendar_holiday(year, country=holidays.US()):
-    cal_generator = []
     months_dictionary = {"January": [],
                          "February": [],
                          "March": [],
@@ -41,16 +40,25 @@ def calendar_holiday(year, country=holidays.US()):
                          "November": [],
                          "December": []
                          }
-
-    for i in range(1, 13):
-        (cal_generator.
-         append(calendar.Calendar(firstweekday=0).itermonthdates(year, i)))
-
-    for d_key, i in zip(months_dictionary.keys(), cal_generator):
-        for y in i:
-            if y in country or y.weekday() == 6 or y.weekday() == 5:
-                (months_dictionary[d_key].
-                 append((y, 'holiday', y.isocalendar()[1])))
-            else:
-                months_dictionary[d_key].append((y, '', y.isocalendar()[1]))
+    indexes = list(zip(range(0, 43, 7), range(7, 43, 7)))
+    for i, dummy in enumerate(months_dictionary):
+        date_list = list(calendar.Calendar(
+                                          firstweekday=0
+                                          ).itermonthdates(2022, i+1)
+                         )
+        for q in indexes:
+            if date_list[q[0]:q[1]]:
+                months_dictionary[
+                                 list(months_dictionary)[i]
+                                  ].append([(
+                                            date, 'holiday',
+                                            date.isocalendar()[1])
+                                            if (
+                                            date in country
+                                            or
+                                            date.weekday() in (6, 5))
+                                            else
+                                            (date, '', date.isocalendar()[1])
+                                            for date
+                                            in date_list][q[0]:q[1]])
     return months_dictionary

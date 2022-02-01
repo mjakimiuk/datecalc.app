@@ -5,6 +5,18 @@
 
   <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="static/calendar.css" />
+  <style>
+      #calendar_table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 10%;
+}
+#calendar_table td, #calendar_table th {
+  border: 1px solid rgb(0, 0, 0);
+  padding: 3px;
+}
+
+  </style>
 </head>
 <p>Week number dates</p>
 
@@ -14,12 +26,12 @@
     <input type="text" placeholder="Days of vacation" name="input_vacation" />
     <select name="country" id="country_id" selected="{{ country }}">
 
-      {% for country in countries %}
+      {% for country in countries_jinja %}
       <option value="{{ country }}"> {{ country }}</option>
       {% endfor %}
     </select>
     <select name="year" id="year_id">
-      {% for year in years %}
+      {% for year in years_jinja %}
       <option value="{{ year }}"> {{ year }}</option>
       {% endfor %}
     </select>
@@ -28,15 +40,15 @@
   </fieldset>
 </form>
 
-{% if choosen_country %}
-<p>Holidays in {{ choosen_country }} in {{ choosen_year }} </p>
+{% if choosen_country_jinja %}
+<p>Holidays in {{ choosen_country_jinja }} in {{ choosen_year_jinja }} </p>
 {% endif %}
 
 
 
-{% for month in value1 if month   %}
+{% for month in generated_list_jinja if month   %}
 
-<table>
+<table id='calendar_table'>
   <thead>
     <tr>
       <th colspan="8">{{ month }}</th>
@@ -53,15 +65,10 @@
     <th>Sun</th>
   </tr>
 
-
-
-
-
-
-  {% for i in [(0, 7), (7, 14), (14, 21), (21, 28), (28, 35), (35, 42)] %}
+  {% for i in generated_list_jinja[month] %}
   <tr>
-    <th class="">{{ value1[month][i[0]:i[1]][0][2] if value1[month][i[0]:i[1]] }}</th>
-    {% for date in value1[month][i[0]:i[1]] %}
+    <th class="week_number">{{ i[0][2]  }}</th>
+    {% for date in i %}
 
     <th class={{ date[1] }}>{{ date[0].day }}</th>
 
@@ -71,14 +78,15 @@
 
 
 
-
-
-
-
-
-
 </table>
+<br>
+{% endfor %}
 
+
+
+
+{% for i in holiday_list_jinja if holiday_list_jinja %}
+        <div> {{ i }} </div>
 {% endfor %}
 
 

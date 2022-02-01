@@ -1,10 +1,10 @@
 from flask import Flask, request, render_template
 from datetime import date
-
-from mj_logic import days_from_now_logic, week_dates_logic, calendar_holiday
-
-
 import holidays
+
+from app_functions import (days_from_now_logic,
+                           week_dates_logic, calendar_holiday)
+
 
 app = Flask(__name__)
 
@@ -13,95 +13,95 @@ today = str(date.today())
 TODAY_int = date.today().year
 YEARS = [str(i) for i in range(TODAY_int, TODAY_int + 6)]
 
-COUNTRIES = {"Angola": holidays.AO(),
-             "Argentina": holidays.AR(),
-             "Aruba": holidays.AW(),
-             "Australia": holidays.AU(),
-             "Austria": holidays.AT(),
-             "Azerbaijan": holidays.AZ(),
-             "Bangladesh": holidays.BD(),
-             "Belarus": holidays.BY(),
-             "Belgium": holidays.BE(),
-             "Botswana": holidays.BW(),
-             "Brazil": holidays.BR(),
-             "Bulgaria": holidays.BG(),
-             "Burundi": holidays.BI(),
-             "Canada": holidays.CA(),
-             "Chile": holidays.CL(),
-             "China": holidays.CN(),
-             "Colombia": holidays.CO(),
-             "Croatia": holidays.HR(),
-             "Curacao": holidays.CW(),
-             "Czechia": holidays.CZ(),
-             "Denmark": holidays.DK(),
-             "Djibouti": holidays.DJ(),
-             "DominicanRepublic": holidays.DO(),
-             "Egypt": holidays.EG(),
-             "Estonia": holidays.EE(),
-             "Ethiopia": holidays.ET(),
-             "EuropeanCentralBank": holidays.ECB(),
-             "Finland": holidays.FI(),
-             "France": holidays.FR(),
-             "Georgia": holidays.GE(),
-             "Germany": holidays.DE(),
-             "Greece": holidays.GR(),
-             "Honduras": holidays.HN(),
-             "HongKong": holidays.HK(),
-             "Hungary": holidays.HU(),
-             "Iceland": holidays.IS(),
-             "India": holidays.IN(),
-             "Ireland": holidays.IE(),
-             "Israel": holidays.IL(),
-             "Italy": holidays.IT(),
-             "Jamaica": holidays.JM(),
-             "Japan": holidays.JP(),
-             "Kazakhstan": holidays.KZ(),
-             "Kenya": holidays.KE(),
-             "Korea": holidays.KR(),
-             "Latvia": holidays.LV(),
-             "Lesotho": holidays.LS(),
-             "Lithuania": holidays.LT(),
-             "Luxembourg": holidays.LU(),
-             "Malaysia": holidays.MY(),
-             "Malawi": holidays.MW(),
-             "Mexico": holidays.MX(),
-             "Morocco": holidays.MA(),
-             "Mozambique": holidays.MZ(),
-             "Netherlands": holidays.NL(),
-             "Namibia": holidays.NA(),
-             "NewZealand": holidays.NZ(),
-             "Nicaragua": holidays.NI(),
-             "Nigeria": holidays.NG(),
-             "NorthMacedonia": holidays.MK(),
-             "Norway": holidays.NO(),
-             "Paraguay": holidays.PY(),
-             "Peru": holidays.PE(),
-             "Poland": holidays.PL(),
-             "Portugal": holidays.PT(),
-             "PortugalExt": holidays.PTE(),
-             "Romania": holidays.RO(),
-             "Russia": holidays.RU(),
-             "SaudiArabia": holidays.SA(),
-             "Serbia": holidays.RS(),
-             "Singapore": holidays.SG(),
-             "Slovakia": holidays.SK(),
-             "Slovenia": holidays.SI(),
-             "SouthAfrica": holidays.ZA(),
-             "Spain": holidays.ES(),
-             "Swaziland": holidays.SZ(),
-             "Sweden": holidays.SE(),
-             "Switzerland": holidays.CH(),
-             "Taiwan": holidays.TW(),
-             "Turkey": holidays.TR(),
-             "Tunisia": holidays.TN(),
-             "Ukraine": holidays.UA(),
-             "UnitedArabEmirates": holidays.AE(),
-             "UnitedKingdom": holidays.UK(),
-             "UnitedStates": holidays.US(),
-             "Venezuela": holidays.VE(),
-             "Vietnam": holidays.VN(),
-             "Zambia": holidays.ZM(),
-             "Zimbabwe": holidays.ZW(),
+COUNTRIES = {"Angola": getattr(holidays, 'AO'),
+             "Argentina": getattr(holidays, 'AR'),
+             "Aruba": getattr(holidays, 'AW'),
+             "Australia": getattr(holidays, 'AU'),
+             "Austria": getattr(holidays, 'AT'),
+             "Azerbaijan": getattr(holidays, 'AZ'),
+             "Bangladesh": getattr(holidays, 'BD'),
+             "Belarus": getattr(holidays, 'BY'),
+             "Belgium": getattr(holidays, 'BE'),
+             "Botswana": getattr(holidays, 'BW'),
+             "Brazil": getattr(holidays, 'BR'),
+             "Bulgaria": getattr(holidays, 'BG'),
+             "Burundi": getattr(holidays, 'BI'),
+             "Canada": getattr(holidays, 'CA'),
+             "Chile": getattr(holidays, 'CL'),
+             "China": getattr(holidays, 'CN'),
+             "Colombia": getattr(holidays, 'CO'),
+             "Croatia": getattr(holidays, 'HR'),
+             "Curacao": getattr(holidays, 'CW'),
+             "Czechia": getattr(holidays, 'CZ'),
+             "Denmark": getattr(holidays, 'DK'),
+             "Djibouti": getattr(holidays, 'DJ'),
+             "DominicanRepublic": getattr(holidays, 'DO'),
+             "Egypt": getattr(holidays, 'EG'),
+             "Estonia": getattr(holidays, 'EE'),
+             "Ethiopia": getattr(holidays, 'ET'),
+             "EuropeanCentralBank": getattr(holidays, 'ECB'),
+             "Finland": getattr(holidays, 'FI'),
+             "France": getattr(holidays, 'FR'),
+             "Georgia": getattr(holidays, 'GE'),
+             "Germany": getattr(holidays, 'DE'),
+             "Greece": getattr(holidays, 'GR'),
+             "Honduras": getattr(holidays, 'HN'),
+             "HongKong": getattr(holidays, 'HK'),
+             "Hungary": getattr(holidays, 'HU'),
+             "Iceland": getattr(holidays, 'IS'),
+             "India": getattr(holidays, 'IN'),
+             "Ireland": getattr(holidays, 'IE'),
+             "Israel": getattr(holidays, 'IL'),
+             "Italy": getattr(holidays, 'IT'),
+             "Jamaica": getattr(holidays, 'JM'),
+             "Japan": getattr(holidays, 'JP'),
+             "Kazakhstan": getattr(holidays, 'KZ'),
+             "Kenya": getattr(holidays, 'KE'),
+             "Korea": getattr(holidays, 'KR'),
+             "Latvia": getattr(holidays, 'LV'),
+             "Lesotho": getattr(holidays, 'LS'),
+             "Lithuania": getattr(holidays, 'LT'),
+             "Luxembourg": getattr(holidays, 'LU'),
+             "Malaysia": getattr(holidays, 'MY'),
+             "Malawi": getattr(holidays, 'MW'),
+             "Mexico": getattr(holidays, 'MX'),
+             "Morocco": getattr(holidays, 'MA'),
+             "Mozambique": getattr(holidays, 'MZ'),
+             "Netherlands": getattr(holidays, 'NL'),
+             "Namibia": getattr(holidays, 'NA'),
+             "NewZealand": getattr(holidays, 'NZ'),
+             "Nicaragua": getattr(holidays, 'NI'),
+             "Nigeria": getattr(holidays, 'NG'),
+             "NorthMacedonia": getattr(holidays, 'MK'),
+             "Norway": getattr(holidays, 'NO'),
+             "Paraguay": getattr(holidays, 'PY'),
+             "Peru": getattr(holidays, 'PE'),
+             "Poland": getattr(holidays, 'PL'),
+             "Portugal": getattr(holidays, 'PT'),
+             "PortugalExt": getattr(holidays, 'PTE'),
+             "Romania": getattr(holidays, 'RO'),
+             "Russia": getattr(holidays, 'RU'),
+             "SaudiArabia": getattr(holidays, 'SA'),
+             "Serbia": getattr(holidays, 'RS'),
+             "Singapore": getattr(holidays, 'SG'),
+             "Slovakia": getattr(holidays, 'SK'),
+             "Slovenia": getattr(holidays, 'SI'),
+             "SouthAfrica": getattr(holidays, 'ZA'),
+             "Spain": getattr(holidays, 'ES'),
+             "Swaziland": getattr(holidays, 'SZ'),
+             "Sweden": getattr(holidays, 'SE'),
+             "Switzerland": getattr(holidays, 'CH'),
+             "Taiwan": getattr(holidays, 'TW'),
+             "Turkey": getattr(holidays, 'TR'),
+             "Tunisia": getattr(holidays, 'TN'),
+             "Ukraine": getattr(holidays, 'UA'),
+             "UnitedArabEmirates": getattr(holidays, 'AE'),
+             "UnitedKingdom": getattr(holidays, 'UK'),
+             "UnitedStates": getattr(holidays, 'US'),
+             "Venezuela": getattr(holidays, 'VE'),
+             "Vietnam": getattr(holidays, 'VN'),
+             "Zambia": getattr(holidays, 'ZM'),
+             "Zimbabwe": getattr(holidays, 'ZW'),
              }
 
 
@@ -149,22 +149,29 @@ def week_dates():
 
 @app.route("/holiday_planner", methods=['GET', 'POST'])
 def holiday_planner():
-    z_cal = ''
-    CHOOSEN_COUNTRY = ''
-    CHOOSEN_YEAR = ''
+    generated_list = ''
+    choosen_country_flask = ''
+    choosen_year_flask = ''
+    holiday_list_flask = ''
     if (request.method == "POST" and request.form.get("input_vacation")
        and request.form.get("country") in COUNTRIES
        and request.form.get("year") in YEARS):
-        z_cal = (calendar_holiday(int(request.form.get("year")),
-                 country=COUNTRIES[request.form.get("country")]))
-        CHOOSEN_COUNTRY = request.form.get("country")
-        CHOOSEN_YEAR = request.form.get("year")
+        generated_list = (calendar_holiday(int(request.form.get("year")),
+                                           country=COUNTRIES[
+                                           request.form.get("country")]()))
+        choosen_country_flask = request.form.get("country")
+        choosen_year_flask = request.form.get("year")
+        holiday_list_flask = [(f"{date.day}-{date.strftime('%B')} - {name}")
+                              for date, name in
+                              sorted(COUNTRIES[request.form.get("country")]
+                              (years=int(choosen_year_flask)).items())]
     return render_template("holiday_planner.html",
-                           value1=z_cal,
-                           countries=COUNTRIES,
-                           years=YEARS,
-                           choosen_country=CHOOSEN_COUNTRY,
-                           choosen_year=CHOOSEN_YEAR)
+                           generated_list_jinja=generated_list,
+                           countries_jinja=COUNTRIES,
+                           years_jinja=YEARS,
+                           choosen_country_jinja=choosen_country_flask,
+                           choosen_year_jinja=choosen_year_flask,
+                           holiday_list_jinja=holiday_list_flask)
 
 
 @app.route("/what_date", methods=['GET', 'POST'])
