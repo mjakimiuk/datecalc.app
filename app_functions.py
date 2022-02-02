@@ -41,7 +41,7 @@ def calendar_holiday(year, country=holidays.US()):
                          "December": []
                          }
     indexes = list(zip(range(0, 43, 7), range(7, 43, 7)))
-    for i, dummy in enumerate(months_dictionary):
+    for i, _ in enumerate(months_dictionary):
         date_list = list(calendar.Calendar(
                                           firstweekday=0
                                           ).itermonthdates(2022, i+1)
