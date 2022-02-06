@@ -1,5 +1,5 @@
 from typing import Callable, List, Dict, Any
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from calendar import Calendar, month_name
 import typing
 import holidays
@@ -40,11 +40,28 @@ def calendar_holiday(year: int,
                          )
         for index_range in indexes:
             if date_list[index_range[0]:index_range[1]]:
-                data_tuple = [(date, 'holiday', date.isocalendar()[1])
+                data_tuple = [(date, 'holiday', date.isocalendar()[1],
+                              date.strftime("%B"))
                               if (date in country or date.weekday() in WEEKEND)
-                              else (date, '', date.isocalendar()[1])
+                              else (date, '', date.isocalendar()[1],
+                              date.strftime("%B"))
                               for date
                               in date_list][index_range[0]:index_range[1]]
                 months_dictionary[list(months_dictionary)[month-1]
                                   ].append(data_tuple)
     return months_dictionary
+
+
+def date_calculator_function(input_data):
+    datetime_obj = datetime.strptime(input_data[0], "%Y-%m-%d")
+    operator = input_data[1]
+    td_days = 0 if input_data[5] == None else int(input_data[5])
+    td_weeks = 0 if input_data[4] == None else int(input_data[4])*7
+    td_months = 0 if input_data[3] == None else int(input_data[3])*7*4
+    td_years = 0 if input_data[2] == None else int(input_data[2])*7*4*12
+    tdelta = timedelta(days=td_days + td_weeks + td_months + td_years)
+    if operator == 'option_add':
+        result = datetime_obj + tdelta
+    elif operator == "option_substract":
+        result = datetime_obj - tdelta
+    return result.strftime("%d-%m-%Y")

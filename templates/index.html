@@ -1,33 +1,32 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+{% block title %}My Date Calculator App{% endblock %}
 
-<head>
-    <title>My flask app</title>
-
-    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
-</head>
-<style>
-    
-    
-    .center {
-      margin: 0;
-      position: absolute;
-      top: 8%;
-      left: 50%;
-      -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
-    }
-    </style>
+{% block content %}
 
 
-<p style="text-align:center">Date calculator</p>
-<div class="center">
-<a class="pure-button" href="/days_from_now">Days from now</a>
-<a class="pure-button" href="/week_dates">Week dates</a>
-<br>
-<br>
-<a class="pure-button" href="/what_date">What Date Would Be</a>
-<a class="pure-button" href="/holiday_planner">Holiday Planner</a>
-</div>
 
 
-  
+  <br>
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        
+      <div class="col-6">
+        <div class="btn-group-vertical" role="group" aria-label="Basic example">
+            <a type="button" class="btn btn-secondary" href="/days_from_now">Days From Now</a>
+            <a type="button" class="btn btn-secondary" href="/week_dates">Week Dates</a>
+            <a type="button" class="btn btn-secondary" href="/date_calculator">Date Calculator</a>
+            <a type="button" class="btn btn-secondary" href="/holiday">Public Holidays Calendar</a>
+          </div>
+      </div>
+      <div class="col">
+       
+      </div>
+    </div>
+ 
+  </div>
+
+
+{% endblock %}
+
