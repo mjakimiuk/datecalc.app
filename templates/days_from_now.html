@@ -28,7 +28,7 @@
     <br>
     
     <div>
-    {% if name!='0' and not name=='1' and not name=='error' %}
+    {% if name and name!='0' and not name=='1' and not name=='error' %}
             <p>Today is {{ today_str_txt }}.</p>
             <p>There is {{ name }} day's from today to submitted date</p>
     {% endif %}

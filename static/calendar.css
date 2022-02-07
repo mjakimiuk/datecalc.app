@@ -1,0 +1,39 @@
+body {
+    background-color: lightblue;
+  }
+  
+  h1 {
+    color: white;
+    text-align: center;
+  }
+  
+  p {
+    font-family: verdana;
+    font-size: 20px;
+  }
+
+
+  .sat {
+    
+    font-weight: bold;
+    color: red;
+  }
+
+  .sun {
+    
+    font-weight: bold;
+    color: red;
+  }
+
+
+  .holiday {
+    
+    font-weight: bold;
+    color: red;
+  }
+
+  .week_number {
+    
+    font-weight: bold;
+    color: rgb(0, 189, 116);
+  }
