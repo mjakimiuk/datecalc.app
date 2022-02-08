@@ -1,16 +1,7 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+{% block title %}My Date Calculator App{% endblock %}
 
-<head>
-    <title>My flask app</title>
-
-    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
-</head>
-
-
-
-
-
-
+{% block content %}
 
 <form  method="POST" action="/days_from_now">
     <label>
@@ -19,7 +10,7 @@
       max="2100-01-01">
     </label>
   
-    <p><button>Submit</button></p>
+    <p><button class="btn btn-secondary">Submit</button></p>
   </form>
 
   <body>
@@ -51,4 +42,6 @@
 
 <br>
 
-<a class="pure-button" href="/">Homepage</a>
+<a class="btn btn-secondary" href="/" >Homepage</a>
+
+{% endblock %}

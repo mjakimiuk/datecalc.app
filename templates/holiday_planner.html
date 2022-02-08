@@ -46,9 +46,10 @@
 
 
 
-{% for month in generated_list_jinja if month   %}
+{% for month in generated_list_jinja if month in ('January','March')   %}
 
 <table id='calendar_table'>
+
   <thead>
     <tr>
       <th colspan="8">{{ month }}</th>
@@ -80,6 +81,9 @@
 
 </table>
 <br>
+
+
+
 {% endfor %}
 
 

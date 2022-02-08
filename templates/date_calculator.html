@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}My Date Calculator App{% endblock %}
+
+{% block content %}
+<form  method="POST" action="/date_calculator">
+    <fieldset>
+        <legend>Please choose date and input</legend>
+        <label>
+            Enter your desired date:
+            <input type="date" name="input_date" value="{{ today_str }}" min="1930-01-01",
+            max="2100-01-01">
+          </label>
+    <table>
+        <tr>
+            Add/Substract
+        </tr>
+    <select name="operator" >
+
+        
+        <option value="option_add"> Add</option>
+        <option value="option_substract"> Substract</option>
+    </select>
+    <tr>
+        Years
+    </tr>
+    <select name="input_years" >
+
+        
+        {% for input_year in input_years_jinja %}
+        <option value="{{ input_year }}"> {{ input_year }}</option>
+        {% endfor %}
+    </select>
+
+    
+    <tr>
+        Months
+    </tr>
+    <select name="input_months" >
+
+        
+        {% for input_months in input_months_jinja %}
+        <option value="{{ input_months }}"> {{ input_months }}</option>
+        {% endfor %}
+    </select>
+
+    
+    <tr>
+        Weeks
+    </tr>
+    <select name="input_weeks" >
+
+        
+        {% for input_weeks in input_weeks_jinja %}
+        <option value="{{ input_weeks }}"> {{ input_weeks }}</option>
+        {% endfor %}
+    </select>
+
+    <tr>
+        Days
+    </tr>
+    <select name="input_days" >
+
+        
+        {% for input_days in input_days_jinja %}
+        <option value="{{ input_days }}"> {{ input_days }}</option>
+        {% endfor %}
+    </select>
+        
+ 
+        
+           
+            <p><button class="btn btn-secondary">Submit</button></p>
+            </fieldset>
+</table>
+  </form>
+
+{% if result_date_jinja %}
+<p>The date will be {{ result_date_jinja }}.</p>
+{% endif %}
+
+
+<a class="btn btn-secondary" href="/" >Homepage</a>
+
+{% endblock %}
