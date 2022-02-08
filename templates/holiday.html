@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}My Date Calculator App{% endblock %}
+
+{% block content %}
+<p>Public Holidays Calendar</p>
+
+<form class="form-group" , method="POST" , action='/holiday'>
+  <fieldset>
+    <legend>Please choose country and year</legend>
+
+    <select name="country" id="country_id" selected="{{ country }}">
+
+      {% for country in countries_jinja %}
+      <option value="{{ country }}"> {{ country }}</option>
+      {% endfor %}
+    </select>
+    <select name="year" id="year_id">
+      {% for year in years_jinja %}
+      <option value="{{ year }}"> {{ year }}</option>
+      {% endfor %}
+    </select>
+
+    <button type="submit" class="pure-button pure-button-primary">Submit</button>
+  </fieldset>
+</form>
+<br>
+{% if choosen_country_jinja %}
+<p>Holidays in {{ choosen_country_jinja }} in {{ choosen_year_jinja }} </p>
+{% endif %}
+
+
+<table class='table' style="width:50%">
+  {% for month in generated_list_jinja if month    %}
+  {% if month in ('January', 'February','March','May','June','August','September','November','December') %}
+  <td>
+
+    {% endif %}
+    {% if month in ('April','July','October') %}
+    <tr>
+      <td>
+        {% endif %}
+        <table>
+
+          <thead>
+            <tr>
+              <th colspan="8">{{ month }}</th>
+            </tr>
+          </thead>
+          <tr>
+            <th>Week</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
+            <th>Sun</th>
+          </tr>
+
+          {% for i in generated_list_jinja[month] %}
+          <tr>
+            <th class="week_number">{{ i[0][2]  }}</th>
+            {% for date in i %}
+
+            <th class={{ date[1] }}>
+              {% if month==date[3] %}
+              {{ date[0].day }}
+              {% else %}
+
+              {% endif %}
+            </th>
+
+            {% endfor %}
+          </tr>
+          {% endfor %}
+
+
+
+        </table>
+
+
+        {% if month in ('January', 'February','March','May','August','November') %}
+      </td>
+      {% endif %}
+      {% if month in ('June','September','December') %}
+  </td>
+  </tr>
+  {% endif %}
+  {% endfor %}
+</table>
+
+
+<br>
+
+{% for i in holiday_list_jinja if holiday_list_jinja %}
+<div> {{ i }} </div>
+{% endfor %}
+
+<a class="btn btn-secondary" href="/">Homepage</a>
+
+
+
+{% endblock %}

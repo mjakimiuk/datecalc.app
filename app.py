@@ -1,17 +1,19 @@
+from distutils.log import debug
 from flask import Flask, request, render_template
 from datetime import date
 import holidays
 
 from app_functions import (days_from_now_logic,
-                           week_dates_logic, calendar_holiday)
+                           week_dates_logic, calendar_holiday,
+                           date_calculator_function)
 
 
 app = Flask(__name__)
 
 
-today = str(date.today())
+TODAY = str(date.today())
 TODAY_int = date.today().year
-YEARS = [str(i) for i in range(TODAY_int, TODAY_int + 6)]
+YEARS = [str(i) for i in range(TODAY_int, TODAY_int + 20)]
 
 COUNTRIES = {"Angola": getattr(holidays, 'AO'),
              "Argentina": getattr(holidays, 'AR'),
@@ -112,10 +114,9 @@ def index():
 
 @app.route("/days_from_now", methods=['GET', 'POST'])
 def days_from_now():
-    global today
     name = ""
-    today_str_txt = today
-    today_str = today
+    today_str_txt = TODAY
+    today_str = TODAY
     if request.method == "POST" and "input_date" in request.form:
         name = request.form.get("input_date")
         name = days_from_now_logic(name)
@@ -128,8 +129,7 @@ def days_from_now():
 
 @app.route("/week_dates", methods=['GET', 'POST'])
 def week_dates():
-    global today
-    today_str = today
+    today_str = TODAY
     date_1 = ""
     date_Year = ""
     date_Week = ""
@@ -147,13 +147,13 @@ def week_dates():
                            date_2=date_2)
 
 
-@app.route("/holiday_planner", methods=['GET', 'POST'])
+@app.route("/holiday", methods=['GET', 'POST'])
 def holiday_planner():
     generated_list = ''
     choosen_country_flask = ''
     choosen_year_flask = ''
     holiday_list_flask = ''
-    if (request.method == "POST" and request.form.get("input_vacation")
+    if (request.method == "POST"
        and request.form.get("country") in COUNTRIES
        and request.form.get("year") in YEARS):
         generated_list = (calendar_holiday(int(request.form.get("year")),
@@ -165,7 +165,7 @@ def holiday_planner():
                               for date, name in
                               sorted(COUNTRIES[request.form.get("country")]
                               (years=int(choosen_year_flask)).items())]
-    return render_template("holiday_planner.html",
+    return render_template("holiday.html",
                            generated_list_jinja=generated_list,
                            countries_jinja=COUNTRIES,
                            years_jinja=YEARS,
@@ -174,6 +174,34 @@ def holiday_planner():
                            holiday_list_jinja=holiday_list_flask)
 
 
-@app.route("/what_date", methods=['GET', 'POST'])
-def what_date():
-    return render_template("what_date.html")
+@app.route("/date_calculator", methods=['GET', 'POST'])
+def date_calculator():
+    input_years_flask = list(range(51))
+    input_months_flask = list(range(51))
+    input_weeks_flask = list(range(51))
+    input_days_flask = list(range(51))
+    result_date_flask = ""
+    today_str_txt = TODAY
+    today_str = TODAY
+    if request.method == "POST" and "input_date" in request.form:
+        today_str = request.form.get("input_date")
+        input_tuple = (request.form.get("input_date"),
+                       request.form.get("operator"),
+                       request.form.get("input_years"),
+                       request.form.get("input_months"),
+                       request.form.get("input_weeks"),
+                       request.form.get("input_days"))
+        print(input_tuple)
+        result_date_flask = date_calculator_function(input_tuple)
+    return render_template("date_calculator.html",
+                           today_str=today_str,
+                           today_str_txt=today_str_txt,
+                           input_years_jinja=input_years_flask,
+                           input_months_jinja=input_months_flask,
+                           input_weeks_jinja=input_weeks_flask,
+                           input_days_jinja=input_days_flask,
+                           result_date_jinja=result_date_flask)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
