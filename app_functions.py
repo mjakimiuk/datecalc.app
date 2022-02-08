@@ -6,23 +6,34 @@ import holidays
 
 
 def days_from_now_logic(date_str: str) -> str:
+    '''
+    Function takes date from Flask and returns
+    substraction/addition of that date from today's date
+
+    Parameters:
+        date_str (str): input date from Flask
+
+    Returns:
+        str((selected_date-today).days): returns substraction/addition
+        of selected date from today's date
+    '''
     try:
-        dt = datetime.strptime(date_str, "%Y-%m-%d")
+        selected_date = datetime.strptime(date_str, "%Y-%m-%d")
         today = datetime.combine(date.today(), datetime.min.time())
-        return str((dt-today).days)
+        return str((selected_date-today).days)
     except ValueError:
         return 'error'
 
 
 def week_dates_logic(year: str, week: str) -> typing.Tuple[str, str]:
-    const_1 = "%Y-W%W-%w"
-    const_2 = "%d/%m/%Y"
+    date_format_input_flask = "%Y-W%W-%w"
+    date_format_output = "%d/%m/%Y"
     try:
         week_str = f"{year}-W{week}"
-        range_1 = datetime.strptime(week_str + '-1', const_1)
-        range_2 = datetime.strptime(week_str + '-0', const_1)
-        return (range_1.date().strftime(const_2),
-                range_2.date().strftime(const_2))
+        week_range_1 = datetime.strptime(week_str + '-1', date_format_input_flask)
+        week_range_2 = datetime.strptime(week_str + '-0', date_format_input_flask)
+        return (week_range_1.date().strftime(date_format_output),
+                week_range_2.date().strftime(date_format_output))
     except ValueError:
         return ('error', 'error')
 
