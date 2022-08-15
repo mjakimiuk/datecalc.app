@@ -3,7 +3,7 @@ from datetime import datetime, date, timedelta
 from calendar import Calendar, month_name
 import typing
 import holidays
-
+from dateutil.relativedelta import *
 
 def days_from_now_logic(date_str: str) -> str:
     try:
@@ -56,10 +56,11 @@ def date_calculator_function(input_data):
     datetime_obj = datetime.strptime(input_data[0], "%Y-%m-%d")
     operator = input_data[1]
     td_days = 0 if input_data[5] == None else int(input_data[5])
-    td_weeks = 0 if input_data[4] == None else int(input_data[4])*7
-    td_months = 0 if input_data[3] == None else int(input_data[3])*7*4
-    td_years = 0 if input_data[2] == None else int(input_data[2])*7*4*12
-    tdelta = timedelta(days=td_days + td_weeks + td_months + td_years)
+    td_weeks = 0 if input_data[4] == None else int(input_data[4])
+    td_months = 0 if input_data[3] == None else int(input_data[3])
+    td_years = 0 if input_data[2] == None else int(input_data[2])
+    tdelta = relativedelta(years=td_years, months=td_months,
+                           weeks=td_weeks, days=td_days)
     if operator == 'option_add':
         result = datetime_obj + tdelta
     elif operator == "option_substract":
